@@ -1,0 +1,216 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Students.aspx.cs" Inherits="StudentPortal1._01.Pages.Admin.Students" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portal</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins',sans-serif;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        h1, h2 {
+            color: #444;
+        }
+
+        .side-menu {
+            position: fixed;
+            background-color: #f05462;
+            width: 20vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .side-menu .brand-name {
+                height: 10vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .side-menu li {
+                font-size: 24px;
+                padding: 10px 40px;
+                color: white;
+                display: flex;
+                align-items: center;
+            }
+
+                .side-menu li:hover {
+                    background: white;
+                    color: #f05462;
+                }
+
+        .container {
+            position: absolute;
+            right: 0;
+            width: 80vw;
+            height: 100vh;
+            background: white;
+        }
+
+            .container .query {
+                margin-top: 10%;
+                margin-left: 30%;
+                margin-right: 30%;
+            }
+
+            .container .box {
+                margin-top: 10%;
+                margin-left: 30%;
+                margin-right: 30%;
+                border: 2px solid black;
+                box-sizing: content-box;
+            }
+
+            .container .header {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 80vw;
+                height: 10vh;
+                background: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+            }
+
+                .container .header .nav {
+                    width: 90%;
+                    display: flex;
+                    align-items: center;
+                }
+
+                    .container .header .nav .LL {
+                        margin-right: 60%;
+                    }
+
+
+
+                    .container .header .nav .img-case {
+                        position: relative;
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                        .container .header .nav .img-case .img {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            margin-right: 0px;
+                        }
+
+            .container .content {
+                position: relative;
+                margin-top: 10vh;
+                min-height: 90vh;
+            }
+
+                .container .content .card {
+                    padding: 20px 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
+
+                    .container .content .card .card {
+                        width: 250px;
+                        height: 150px;
+                        background: rgb(75, 174, 212);
+                        margin: 20px 10px;
+                    }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="side-menu">
+            <div class="brand-name">
+                <h2>STUDENT PORTAL</h2>
+            </div>
+            <ul>
+                <li> <asp:HyperLink ID="Dashboardhl" runat="server" NavigateUrl="Dashboard.aspx">Dashboard</asp:HyperLink></li>
+                <li> <asp:HyperLink ID="Studentshl" runat="server" NavigateUrl="Students.aspx">Students</asp:HyperLink></li>
+                <li> <asp:HyperLink ID="Instructorshl" runat="server" NavigateUrl="Instructors.aspx">Instructors</asp:HyperLink></li>
+                <li> <asp:HyperLink ID="Coursess" runat="server" NavigateUrl="Courses.aspx">Courses</asp:HyperLink></li>
+                <li> <asp:HyperLink ID="AddCourse" runat="server" NavigateUrl="AddCourse.aspx">Add Course</asp:HyperLink></li>
+                <li> <asp:HyperLink ID="AddStudent" runat="server" NavigateUrl="AddStudent.aspx">Add Student</asp:HyperLink></li>
+                <li> <asp:HyperLink ID="AddInstructor" runat="server" NavigateUrl="AddInstructor.aspx">Add Instructor</asp:HyperLink></li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="query">
+                Enter Roll No.
+                <asp:TextBox ID="search_box" runat="server"></asp:TextBox>
+                <asp:Button ID="search" runat="server" OnClick="Search_Click" />
+            </div>
+            <div class="box">
+                <div id="listviewcourse">
+                    <asp:ListView ID="lvstudent" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("roll_no")%></td>
+                                <td style="padding-left:50px"><%# Eval("student_name")%></td>
+                                <td style="padding-left:50px"><%# Eval("department")%></td>
+                                <td style="padding-left:50px"><%# Eval("semester")%></td>
+                                <td style="padding-left:50px"><%# Eval("section")%></td>
+                                <td>
+                                <td><asp:LinkButton runat="server" CommandName="Details" OnCommand="Details_Click" CommandArgument='<%# Eval("roll_no")%>'>Details</asp:LinkButton></td></td>
+                            </tr>
+                        </ItemTemplate>
+                        <LayoutTemplate>
+                            <table id="tbl1" runat="server" cellspacing="5">
+                                <tr id="tr1" runat="server">
+                                    <td id="td1" runat="server">Roll No ID</td>
+                                    <td id="td2" runat="server" style="padding-left:50px">Student Name</td>
+                                    <td id="td3" runat="server" style="padding-left:50px">Department</td>
+                                    <td id="td4" runat="server" style="padding-left:50px">Semester</td>
+                                    <td id="td5" runat="server" style="padding-left:50px">Section</td>
+                                </tr>
+                                <tr id="ItemPlaceholder" runat="server" style="padding-left:50px">
+                                </tr>
+                            </table>
+                        </LayoutTemplate>
+                    </asp:ListView>
+                </div>
+
+
+                <div class="header">
+                    <div><strong>ID: </strong> <asp:Label runat="server" ID="ID"></asp:Label></div>
+                    <div class="nav">
+                        <div class="img-case"><img src="user.png" alt=""></div>
+                        <div class="LL">
+                            <asp:HyperLink runat="server" ID="profile" NavigateUrl="ChangePassword.aspx"><strong>Change Password</strong></asp:HyperLink>
+                            &nbsp;&nbsp;<asp:HyperLink runat="server" ID="logout" NavigateUrl="AdminLogin.aspx."><strong>Logout</strong></asp:HyperLink>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
